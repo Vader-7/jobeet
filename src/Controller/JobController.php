@@ -34,12 +34,19 @@ class JobController extends AbstractController
         ]);
     }*/
 
+    
     /**
      * Finds and displays a job entity.
      *
      * @Route("job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"})
+     *
+     * @Entity("job", expr="repository.findActiveJob(id)")
+     *
+     * @param Job $job
+     *
+     * @return Response
      */
-    public function show(Job $job): Response
+    public function show(Job $job) : Response
     {
         return $this->render("job/show.html.twig", [
             "job" => $job,
