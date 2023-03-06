@@ -28,7 +28,7 @@ class JobController extends AbstractController
     /**
      * Finds and displays a job entity.
      *
-     * @Route("job/{id}", name="job.show")
+     * @Route("job/{id}", name="job.show", requirements={"id" = "\d+"})
      */
     public function show(Job $job) : Response
     {
