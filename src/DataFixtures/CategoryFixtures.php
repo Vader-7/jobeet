@@ -12,19 +12,19 @@ class CategoryFixtures extends Fixture
      *
      * @return void
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         $designCategory = new Category();
-        $designCategory->setName('Design');
+        $designCategory->setName("Design");
 
         $programmingCategory = new Category();
-        $programmingCategory->setName('Programming');
+        $programmingCategory->setName("Programming");
 
         $managerCategory = new Category();
-        $managerCategory->setName('Manager');
+        $managerCategory->setName("Manager");
 
         $administratorCategory = new Category();
-        $administratorCategory->setName('Administrator');
+        $administratorCategory->setName("Administrator");
 
         $manager->persist($designCategory);
         $manager->persist($programmingCategory);
@@ -33,9 +33,9 @@ class CategoryFixtures extends Fixture
 
         $manager->flush();
 
-        $this->addReference('category-design', $designCategory);
-        $this->addReference('category-programming', $programmingCategory);
-        $this->addReference('category-manager', $managerCategory);
-        $this->addReference('category-administrator', $administratorCategory);
+        $this->addReference("category-design", $designCategory);
+        $this->addReference("category-programming", $programmingCategory);
+        $this->addReference("category-manager", $managerCategory);
+        $this->addReference("category-administrator", $administratorCategory);
     }
 }

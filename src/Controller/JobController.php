@@ -18,10 +18,7 @@ class JobController extends AbstractController
      */
     public function list(EntityManagerInterface $em): Response
     {
-        $query = $em
-            ->createQuery("SELECT j FROM App:Job j WHERE j.createdAt > :date")
-            ->setParameter("date", new \DateTime("-30 days"));
-        $jobs = $query->getResult();
+        $jobs = $em->getRepository(Job::class)->findActiveJobs();
 
         return $this->render("job/list.html.twig", [
             "jobs" => $jobs,
