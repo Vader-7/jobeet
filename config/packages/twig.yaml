@@ -1,6 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-
+    globals:
+            max_jobs_on_homepage: '%max_jobs_on_homepage%'
 when@test:
     twig:
+        globals:
+            max_jobs_on_homepage: '%max_jobs_on_homepage%'
         strict_variables: true
+        

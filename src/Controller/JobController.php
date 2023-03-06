@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Job;
+use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 
 class JobController extends AbstractController
@@ -18,10 +19,10 @@ class JobController extends AbstractController
      */
     public function list(EntityManagerInterface $em): Response
     {
-        $jobs = $em->getRepository(Job::class)->findActiveJobs();
+        $categories = $em->getRepository(Category::class)->findWithActiveJobs();
 
         return $this->render("job/list.html.twig", [
-            "jobs" => $jobs,
+            "categories" => $categories,
         ]);
     }
     /*public function list(ManagerRegistry $doctrine) : Response
