@@ -14,7 +14,7 @@ class JobController extends AbstractController
     /**
      * Lists all job entities.
      *
-     * @Route("/", name="job.list")
+     * @Route("/", name="job.list", methods="GET")
      */
     public function list(ManagerRegistry $doctrine) : Response
     {
@@ -25,10 +25,10 @@ class JobController extends AbstractController
         ]);
     }
     
-    /**
+   /**
      * Finds and displays a job entity.
      *
-     * @Route("job/{id}", name="job.show", requirements={"id" = "\d+"})
+     * @Route("job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"})
      */
     public function show(Job $job) : Response
     {
