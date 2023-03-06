@@ -16,15 +16,15 @@ class JobController extends AbstractController
      *
      * @Route("/", name="job.list", methods="GET")
      */
-    public function list(EntityManagerInterface $em) : Response
+    public function list(EntityManagerInterface $em): Response
     {
-        $query = $em->createQuery(
-            'SELECT j FROM App:Job j WHERE j.createdAt > :date'
-        )->setParameter('date', new \DateTime('-30 days'));
+        $query = $em
+            ->createQuery("SELECT j FROM App:Job j WHERE j.createdAt > :date")
+            ->setParameter("date", new \DateTime("-30 days"));
         $jobs = $query->getResult();
 
-        return $this->render('job/list.html.twig', [
-            'jobs' => $jobs,
+        return $this->render("job/list.html.twig", [
+            "jobs" => $jobs,
         ]);
     }
     /*public function list(ManagerRegistry $doctrine) : Response
@@ -35,16 +35,16 @@ class JobController extends AbstractController
             'jobs' => $jobs,
         ]);
     }*/
-    
-   /**
+
+    /**
      * Finds and displays a job entity.
      *
      * @Route("job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"})
      */
-    public function show(Job $job) : Response
+    public function show(Job $job): Response
     {
-        return $this->render('job/show.html.twig', array(
-            'job' => $job,
-        ));
+        return $this->render("job/show.html.twig", [
+            "job" => $job,
+        ]);
     }
 }
