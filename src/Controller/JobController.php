@@ -1,6 +1,16 @@
-use App\Entity\Job;
-use Symfony\Component\HttpFoundation\Response;
+<?php
 
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Job;
+
+/**
+ * @Route("job")
+ */
 class JobController extends AbstractController
 {
     /**
@@ -10,15 +20,15 @@ class JobController extends AbstractController
      *
      * @return Response
      */
-    public function list() : Response
+    public function list(ManagerRegistry $doctrine) : Response
     {
-        $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
+        $jobs = $doctrine->getRepository(Job::class)->findAll();
 
         return $this->render('job/list.html.twig', [
             'jobs' => $jobs,
         ]);
     }
-    /**
+     /**
      * Finds and displays a job entity.
      *
      * @Route("/{id}", name="job.show")
@@ -29,8 +39,8 @@ class JobController extends AbstractController
      */
     public function show(Job $job) : Response
     {
-        return $this->render('job/show.html.twig', [
+        return $this->render('job/show.html.twig', array(
             'job' => $job,
-        ]);
+        ));
     }
 }

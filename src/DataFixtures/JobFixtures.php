@@ -1,9 +1,10 @@
+<?php
 namespace App\DataFixtures;
 
 use App\Entity\Job;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class JobFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -13,9 +14,11 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      * @return void
      */
     public function load(ObjectManager $manager) : void
+    
     {
+       
         $jobSensioLabs = new Job();
-        $jobSensioLabs->setCategory($manager->merge($this->getReference('category-programming')));
+        $jobSensioLabs->setCategory($this->getReference('category-programming'));
         $jobSensioLabs->setType('full-time');
         $jobSensioLabs->setCompany('Sensio Labs');
         $jobSensioLabs->setLogo('sensio-labs.gif');
@@ -31,7 +34,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $jobSensioLabs->setExpiresAt(new \DateTime('+30 days'));
 
         $jobExtremeSensio = new Job();
-        $jobExtremeSensio->setCategory($manager->merge($this->getReference('category-design')));
+        $jobExtremeSensio->setCategory($this->getReference('category-design'));
         $jobExtremeSensio->setType('part-time');
         $jobExtremeSensio->setCompany('Extreme Sensio');
         $jobExtremeSensio->setLogo('extreme-sensio.gif');
