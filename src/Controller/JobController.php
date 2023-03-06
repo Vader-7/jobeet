@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Job;
-
+use Doctrine\ORM\EntityManagerInterface;
 
 class JobController extends AbstractController
 {
@@ -16,14 +16,25 @@ class JobController extends AbstractController
      *
      * @Route("/", name="job.list", methods="GET")
      */
-    public function list(ManagerRegistry $doctrine) : Response
+    public function list(EntityManagerInterface $em) : Response
+    {
+        $query = $em->createQuery(
+            'SELECT j FROM App:Job j WHERE j.createdAt > :date'
+        )->setParameter('date', new \DateTime('-30 days'));
+        $jobs = $query->getResult();
+
+        return $this->render('job/list.html.twig', [
+            'jobs' => $jobs,
+        ]);
+    }
+    /*public function list(ManagerRegistry $doctrine) : Response
     {
         $jobs = $doctrine->getRepository(Job::class)->findAll();
 
         return $this->render('job/list.html.twig', [
             'jobs' => $jobs,
         ]);
-    }
+    }*/
     
    /**
      * Finds and displays a job entity.
