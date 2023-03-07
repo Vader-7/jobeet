@@ -27,6 +27,7 @@ class Category
      * @ORM\Column(type="string", length=100)
      */
     private $name;
+
     /**
      * @var string
      *
@@ -59,7 +60,7 @@ class Category
     /**
      * @return int
      */
-    public function getId(): ?int
+    public function getId() : ?int
     {
         return $this->id;
     }
@@ -67,10 +68,23 @@ class Category
     /**
      * @return string
      */
-    public function getName(): ?string
+    public function getName() : ?string
     {
         return $this->name;
     }
+
+    /**
+     * @param string $name
+     *
+     * @return self
+     */
+    public function setName(string $name) : self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     /**
      * @return string|null
      */
@@ -78,16 +92,13 @@ class Category
     {
         return $this->slug;
     }
-    /**
-     * @param string $name
-     *
-     * @return self
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
-        return $this;
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     /**
@@ -99,11 +110,21 @@ class Category
     }
 
     /**
+     * @return Job[]|ArrayCollection
+     */
+    public function getActiveJobs()
+    {
+        return $this->jobs->filter(function(Job $job) {
+            return $job->getExpiresAt() > new \DateTime();
+        });
+    }
+
+    /**
      * @param Job $job
      *
      * @return self
      */
-    public function addJob(Job $job): self
+    public function addJob(Job $job) : self
     {
         if (!$this->jobs->contains($job)) {
             $this->jobs->add($job);
@@ -117,7 +138,7 @@ class Category
      *
      * @return self
      */
-    public function removeJob(Job $job): self
+    public function removeJob(Job $job) : self
     {
         $this->jobs->removeElement($job);
 
@@ -131,21 +152,13 @@ class Category
     {
         return $this->affiliates;
     }
-    /**
-     * @return Job[]|ArrayCollection
-     */
-    public function getActiveJobs()
-    {
-        return $this->jobs->filter(function (Job $job) {
-            return $job->getExpiresAt() > new \DateTime();
-        });
-    }
+
     /**
      * @param Affiliate $affiliate
      *
      * @return self
      */
-    public function addAffiliate($affiliate): self
+    public function addAffiliate($affiliate) : self
     {
         if (!$this->affiliates->contains($affiliate)) {
             $this->affiliates->add($affiliate);
@@ -153,19 +166,13 @@ class Category
 
         return $this;
     }
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
-    }
+
     /**
      * @param Affiliate $affiliate
      *
      * @return self
      */
-    public function removeAffiliate($affiliate): self
+    public function removeAffiliate($affiliate) : self
     {
         $this->affiliates->removeElement($affiliate);
 
