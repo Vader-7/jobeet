@@ -71,7 +71,7 @@ class Category
     {
         return $this->name;
     }
-       /**
+    /**
      * @return string|null
      */
     public function getSlug() : ?string

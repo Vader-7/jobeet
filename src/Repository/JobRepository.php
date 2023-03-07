@@ -4,6 +4,9 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Job;
+use App\Entity\Category;
+use Doctrine\ORM\AbstractQuery;
+
 
 class JobRepository extends EntityRepository
 {
@@ -42,5 +45,20 @@ class JobRepository extends EntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return AbstractQuery
+     */
+    public function getPaginatedActiveJobsByCategoryQuery(Category $category) : AbstractQuery
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.category = :category')
+            ->andWhere('j.expiresAt > :date')
+            ->setParameter('category', $category)
+            ->setParameter('date', new \DateTime())
+            ->getQuery();
     }
 }
