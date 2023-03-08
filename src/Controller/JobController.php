@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Job;
 use App\Entity\Category;
+use App\Entity\Job;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class JobController extends AbstractController
 {
@@ -16,6 +16,10 @@ class JobController extends AbstractController
      * Lists all job entities.
      *
      * @Route("/", name="job.list", methods="GET")
+     *
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
      */
     public function list(EntityManagerInterface $em): Response
     {
@@ -25,6 +29,7 @@ class JobController extends AbstractController
             "categories" => $categories,
         ]);
     }
+
     /**
      * Finds and displays a job entity.
      *
@@ -36,7 +41,7 @@ class JobController extends AbstractController
      *
      * @return Response
      */
-    public function show(Job $job) : Response
+    public function show(Job $job): Response
     {
         return $this->render("job/show.html.twig", [
             "job" => $job,

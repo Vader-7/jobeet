@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,6 +50,32 @@ class Category
     }
 
     //setters and getters
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     *
+     * @ORM\Column(type="string", length=128, unique=true)
+     */
+    private $slug;
+
+    // ...
+
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
     /**
      * @return int
      */
