@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-//use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Job;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class JobController extends AbstractController
 {
@@ -18,39 +15,26 @@ class JobController extends AbstractController
      *
      * @Route("/", name="job.list", methods="GET")
      */
-    public function list(EntityManagerInterface $em): Response
+    public function list(EntityManagerInterface $em) : Response
     {
-        $categories = $em->getRepository(Category::class)->findWithActiveJobs();
+    $query = $em->createQuery(
+        'SELECT j FROM App:Job j WHERE j.expiresAt > :date'
+    )->setParameter('date', new \DateTime());
+    $jobs = $query->getResult();
 
-        return $this->render("job/list.html.twig", [
-            "categories" => $categories,
+    return $this->render('job/list.html.twig', [
+        'jobs' => $jobs,
         ]);
-    }
-    /*public function list(ManagerRegistry $doctrine) : Response
-    {
-        $jobs = $doctrine->getRepository(Job::class)->findAll();
-
-        return $this->render('job/list.html.twig', [
-            'jobs' => $jobs,
-        ]);
-    }*/
-
-    
+    }   
     /**
      * Finds and displays a job entity.
      *
      * @Route("job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"})
-     *
-     * @Entity("job", expr="repository.findActiveJob(id)")
-     *
-     * @param Job $job
-     *
-     * @return Response
      */
     public function show(Job $job) : Response
     {
-        return $this->render("job/show.html.twig", [
-            "job" => $job,
+        return $this->render('job/show.html.twig', [
+            'job' => $job,
         ]);
     }
 }

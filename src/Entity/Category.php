@@ -1,13 +1,13 @@
 <?php
 
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="categories")
  */
 class Category
@@ -29,15 +29,6 @@ class Category
     private $name;
 
     /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"name"})
-     *
-     * @ORM\Column(type="string", length=128, unique=true)
-     */
-    private $slug;
-
-    /**
      * @var Job[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Job", mappedBy="category")
@@ -51,13 +42,15 @@ class Category
      */
     private $affiliates;
 
+    //constructor
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
         $this->affiliates = new ArrayCollection();
     }
 
-    /**
+    //setters and getters
+     /**
      * @return int
      */
     public function getId() : ?int
@@ -86,37 +79,11 @@ class Category
     }
 
     /**
-     * @return string|null
-     */
-    public function getSlug() : ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
-    }
-
-    /**
      * @return Job[]|ArrayCollection
      */
     public function getJobs()
     {
         return $this->jobs;
-    }
-
-    /**
-     * @return Job[]|ArrayCollection
-     */
-    public function getActiveJobs()
-    {
-        return $this->jobs->filter(function(Job $job) {
-            return $job->getExpiresAt() > new \DateTime();
-        });
     }
 
     /**
@@ -179,3 +146,4 @@ class Category
         return $this;
     }
 }
+
