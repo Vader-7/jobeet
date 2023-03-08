@@ -64,7 +64,7 @@ class Affiliate
      */
     private $categories;
 
-    //constructor 
+    //constructor
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -74,7 +74,7 @@ class Affiliate
     /**
      * @return int
      */
-    public function getId() : ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -82,7 +82,7 @@ class Affiliate
     /**
      * @return string
      */
-    public function getUrl() : ?string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -92,7 +92,7 @@ class Affiliate
      *
      * @return self
      */
-    public function setUrl(string $url) : self
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -102,7 +102,7 @@ class Affiliate
     /**
      * @return string
      */
-    public function getEmail() : ?string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -112,7 +112,7 @@ class Affiliate
      *
      * @return self
      */
-    public function setEmail(string $email) : self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -122,7 +122,7 @@ class Affiliate
     /**
      * @return string
      */
-    public function getToken() : ?string
+    public function getToken(): ?string
     {
         return $this->token;
     }
@@ -132,7 +132,7 @@ class Affiliate
      *
      * @return self
      */
-    public function setToken(?string $token) : self
+    public function setToken(?string $token): self
     {
         $this->token = $token;
 
@@ -142,7 +142,7 @@ class Affiliate
     /**
      * @return bool
      */
-    public function isActive() : ?bool
+    public function isActive(): ?bool
     {
         return $this->active;
     }
@@ -152,7 +152,7 @@ class Affiliate
      *
      * @return self
      */
-    public function setActive(bool $active) : self
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 
@@ -162,7 +162,7 @@ class Affiliate
     /**
      * @return \DateTime
      */
-    public function getCreatedAt() : ?\DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -180,7 +180,7 @@ class Affiliate
      *
      * @return self
      */
-    public function addCategory(Category $category) : self
+    public function addCategory(Category $category): self
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
@@ -194,7 +194,7 @@ class Affiliate
      *
      * @return self
      */
-    public function removeCategory(Category $category) : self
+    public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
 
@@ -202,7 +202,7 @@ class Affiliate
     }
 
     //Life cycle callbacks
-      /**
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
