@@ -14,7 +14,7 @@
 			</thead>
 
 			<tbody>
-				{% for job in category.activeJobs %}
+				{% for job in category.activeJobs|slice(0, 10) %}
 					<tr>
 						<td>{{ job.location }}</td>
 						<td>
