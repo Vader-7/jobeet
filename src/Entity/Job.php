@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -448,7 +449,7 @@ class Job
         $this->updatedAt = new \DateTime();
 
         if (!$this->expiresAt) {
-            $this->expiresAt = (clone $this->createdAt)->modify('+30 days');
+            $this->expiresAt = (clone $this->createdAt)->modify("+30 days");
         }
     }
 
