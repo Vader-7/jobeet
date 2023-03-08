@@ -30,8 +30,8 @@ class CategoryController extends Controller
      */
     public function show(
         Category $category,
-        PaginatorInterface $paginator,
-        int $page
+        int $page,
+        PaginatorInterface $paginator
     ): Response {
         $activeJobs = $paginator->paginate(
             $this->getDoctrine()

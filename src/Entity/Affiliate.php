@@ -64,13 +64,11 @@ class Affiliate
      */
     private $categories;
 
-    //constructor
     public function __construct()
     {
         $this->categories = new ArrayCollection();
     }
 
-    //setters and getters
     /**
      * @return int
      */
@@ -201,7 +199,6 @@ class Affiliate
         return $this;
     }
 
-    //Life cycle callbacks
     /**
      * @ORM\PrePersist
      */
