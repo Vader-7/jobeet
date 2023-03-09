@@ -17,21 +17,23 @@ use App\Service\JobHistoryService;
 
 class JobController extends AbstractController
 {
-    /**
+   /**
      * Lists all job entities.
      *
      * @Route("/", name="job.list", methods="GET")
      *
      * @param EntityManagerInterface $em
+     * @param JobHistoryService $jobHistoryService
      *
      * @return Response
      */
-    public function list(EntityManagerInterface $em) : Response
+    public function list(EntityManagerInterface $em, JobHistoryService $jobHistoryService) : Response
     {
         $categories = $em->getRepository(Category::class)->findWithActiveJobs();
 
         return $this->render('job/list.html.twig', [
             'categories' => $categories,
+            'historyJobs' => $jobHistoryService->getJobs(),
         ]);
     }
 
