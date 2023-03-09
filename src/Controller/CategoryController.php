@@ -32,18 +32,16 @@ class CategoryController extends Controller
         Category $category,
         int $page,
         PaginatorInterface $paginator
-    ): Response {
+    ) : Response {
         $activeJobs = $paginator->paginate(
-            $this->getDoctrine()
-                ->getRepository(Job::class)
-                ->getPaginatedActiveJobsByCategoryQuery($category),
+            $this->getDoctrine()->getRepository(Job::class)->getPaginatedActiveJobsByCategoryQuery($category),
             $page,
-            $this->getParameter("max_jobs_on_category")
+            $this->getParameter('max_jobs_on_category')
         );
 
-        return $this->render("category/show.html.twig", [
-            "category" => $category,
-            "activeJobs" => $activeJobs,
+        return $this->render('category/show.html.twig', [
+            'category' => $category,
+            'activeJobs' => $activeJobs,
         ]);
     }
 }
