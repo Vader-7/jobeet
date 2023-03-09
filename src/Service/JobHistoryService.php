@@ -20,18 +20,20 @@ class JobHistoryService
      * @param SessionInterface $session
      * @param EntityManagerInterface $em
      */
-    public function __construct(SessionInterface $session, EntityManagerInterface $em)
-    {
+    public function __construct(
+        SessionInterface $session,
+        EntityManagerInterface $em
+    ) {
         $this->session = $session;
         $this->em = $em;
     }
 
-     /**
+    /**
      * @param Job $job
      *
      * @return void
      */
-    public function addJob(Job $job) : void
+    public function addJob(Job $job): void
     {
         $jobs = $this->getJobIds();
 
@@ -45,20 +47,20 @@ class JobHistoryService
         $jobs = array_slice($jobs, 0, self::MAX);
 
         // Store IDs in session
-        $this->session->set('job_history', $jobs);
+        $this->session->set("job_history", $jobs);
     }
 
     /**
      * @return array
      */
-    private function getJobIds() : array
+    private function getJobIds(): array
     {
-        return $this->session->get('job_history', []);
+        return $this->session->get("job_history", []);
     }
     /**
      * @return Job[]
      */
-    public function getJobs() : array
+    public function getJobs(): array
     {
         $jobs = [];
         $jobRepository = $this->em->getRepository(Job::class);
@@ -68,5 +70,5 @@ class JobHistoryService
         }
 
         return array_filter($jobs);
-    }   
-}   
+    }
+}

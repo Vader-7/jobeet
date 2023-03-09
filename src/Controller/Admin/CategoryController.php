@@ -21,12 +21,12 @@ class CategoryController extends AbstractController
      *
      * @return Response
      */
-    public function list(EntityManagerInterface $em) : Response
+    public function list(EntityManagerInterface $em): Response
     {
         $categories = $em->getRepository(Category::class)->findAll();
 
-        return $this->render('admin/category/list.html.twig', [
-            'categories' => $categories,
+        return $this->render("admin/category/list.html.twig", [
+            "categories" => $categories,
         ]);
     }
 
@@ -40,8 +40,10 @@ class CategoryController extends AbstractController
      *
      * @return Response
      */
-    public function create(Request $request, EntityManagerInterface $em) : Response
-    {
+    public function create(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -50,11 +52,11 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('admin.category.list');
+            return $this->redirectToRoute("admin.category.list");
         }
 
-        return $this->render('admin/category/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->render("admin/category/create.html.twig", [
+            "form" => $form->createView(),
         ]);
     }
 
@@ -69,20 +71,23 @@ class CategoryController extends AbstractController
      *
      * @return Response
      */
-    public function edit(Request $request, EntityManagerInterface $em, Category $category) : Response
-    {
+    public function edit(
+        Request $request,
+        EntityManagerInterface $em,
+        Category $category
+    ): Response {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            return $this->redirectToRoute('admin.category.list');
+            return $this->redirectToRoute("admin.category.list");
         }
 
-        return $this->render('admin/category/edit.html.twig', [
-            'category' => $category,
-            'form' => $form->createView(),
+        return $this->render("admin/category/edit.html.twig", [
+            "category" => $category,
+            "form" => $form->createView(),
         ]);
     }
 
@@ -97,13 +102,21 @@ class CategoryController extends AbstractController
      *
      * @return Response
      */
-    public function delete(Request $request, EntityManagerInterface $em, Category $category) : Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
+    public function delete(
+        Request $request,
+        EntityManagerInterface $em,
+        Category $category
+    ): Response {
+        if (
+            $this->isCsrfTokenValid(
+                "delete" . $category->getId(),
+                $request->request->get("_token")
+            )
+        ) {
             $em->remove($category);
             $em->flush();
         }
 
-        return $this->redirectToRoute('admin.category.list');
+        return $this->redirectToRoute("admin.category.list");
     }
 }

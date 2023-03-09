@@ -13,20 +13,20 @@ class UserFixtures extends Fixture
      *
      * @return void
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         $user = new User();
-        $user->setUsername('user');
-        $user->setEmail('user@email.org');
-        $user->setPlainPassword('user');
-        $user->addRole('ROLE_USER');
+        $user->setUsername("user");
+        $user->setEmail("user@email.org");
+        $user->setPlainPassword("user");
+        $user->addRole("ROLE_USER");
         $user->setEnabled(true);
 
         $admin = new User();
-        $admin->setUsername('admin');
-        $admin->setEmail('admin@email.org');
-        $admin->setPlainPassword('admin');
-        $admin->addRole('ROLE_ADMIN');
+        $admin->setUsername("admin");
+        $admin->setEmail("admin@email.org");
+        $admin->setPlainPassword("admin");
+        $admin->addRole("ROLE_ADMIN");
         $admin->setEnabled(true);
 
         $manager->persist($user);

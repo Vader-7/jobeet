@@ -29,20 +29,23 @@ class JobController extends AbstractController
      *
      * @return Response
      */
-    public function list(EntityManagerInterface $em, PaginatorInterface $paginator, int $page) : Response
-    {
+    public function list(
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        int $page
+    ): Response {
         $jobs = $paginator->paginate(
-            $em->getRepository(Job::class)->createQueryBuilder('j'),
+            $em->getRepository(Job::class)->createQueryBuilder("j"),
             $page,
-            $this->getParameter('max_per_page'),
+            $this->getParameter("max_per_page"),
             [
-                PaginatorInterface::DEFAULT_SORT_FIELD_NAME => 'j.createdAt',
-                PaginatorInterface::DEFAULT_SORT_DIRECTION => 'DESC',
+                PaginatorInterface::DEFAULT_SORT_FIELD_NAME => "j.createdAt",
+                PaginatorInterface::DEFAULT_SORT_DIRECTION => "DESC",
             ]
         );
 
-        return $this->render('admin/job/list.html.twig', [
-            'jobs' => $jobs,
+        return $this->render("admin/job/list.html.twig", [
+            "jobs" => $jobs,
         ]);
     }
 
@@ -56,8 +59,10 @@ class JobController extends AbstractController
      *
      * @return Response
      */
-    public function create(Request $request, EntityManagerInterface $em) : Response
-    {
+    public function create(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
         $job = new Job();
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
@@ -66,11 +71,11 @@ class JobController extends AbstractController
             $em->persist($job);
             $em->flush();
 
-            return $this->redirectToRoute('admin.job.list');
+            return $this->redirectToRoute("admin.job.list");
         }
 
-        return $this->render('admin/job/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->render("admin/job/create.html.twig", [
+            "form" => $form->createView(),
         ]);
     }
 
@@ -85,19 +90,22 @@ class JobController extends AbstractController
      *
      * @return Response
      */
-    public function edit(Request $request, EntityManagerInterface $em, Job $job) : Response
-    {
+    public function edit(
+        Request $request,
+        EntityManagerInterface $em,
+        Job $job
+    ): Response {
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            return $this->redirectToRoute('admin.job.list');
+            return $this->redirectToRoute("admin.job.list");
         }
 
-        return $this->render('admin/job/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->render("admin/job/edit.html.twig", [
+            "form" => $form->createView(),
         ]);
     }
 
@@ -112,13 +120,21 @@ class JobController extends AbstractController
      *
      * @return Response
      */
-    public function delete(Request $request, EntityManagerInterface $em, Job $job) : Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $job->getId(), $request->request->get('_token'))) {
+    public function delete(
+        Request $request,
+        EntityManagerInterface $em,
+        Job $job
+    ): Response {
+        if (
+            $this->isCsrfTokenValid(
+                "delete" . $job->getId(),
+                $request->request->get("_token")
+            )
+        ) {
             $em->remove($job);
             $em->flush();
         }
 
-        return $this->redirectToRoute('admin.job.list');
+        return $this->redirectToRoute("admin.job.list");
     }
 }

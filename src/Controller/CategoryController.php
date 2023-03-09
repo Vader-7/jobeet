@@ -35,17 +35,19 @@ class CategoryController extends Controller
         int $page,
         PaginatorInterface $paginator,
         JobHistoryService $jobHistoryService
-    ) : Response {
+    ): Response {
         $activeJobs = $paginator->paginate(
-            $this->getDoctrine()->getRepository(Job::class)->getPaginatedActiveJobsByCategoryQuery($category),
+            $this->getDoctrine()
+                ->getRepository(Job::class)
+                ->getPaginatedActiveJobsByCategoryQuery($category),
             $page,
-            $this->getParameter('max_jobs_on_category')
+            $this->getParameter("max_jobs_on_category")
         );
 
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
-            'activeJobs' => $activeJobs,
-            'historyJobs' => $jobHistoryService->getJobs(),
+        return $this->render("category/show.html.twig", [
+            "category" => $category,
+            "activeJobs" => $activeJobs,
+            "historyJobs" => $jobHistoryService->getJobs(),
         ]);
     }
 }

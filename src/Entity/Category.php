@@ -60,7 +60,7 @@ class Category
     /**
      * @return int
      */
-    public function getId() : ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -68,7 +68,7 @@ class Category
     /**
      * @return string
      */
-    public function getName() : ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -78,7 +78,7 @@ class Category
      *
      * @return self
      */
-    public function setName(string $name) : self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -88,7 +88,7 @@ class Category
     /**
      * @return string|null
      */
-    public function getSlug() : ?string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -114,8 +114,9 @@ class Category
      */
     public function getActiveJobs()
     {
-        return $this->jobs->filter(function(Job $job) {
-            return $job->getExpiresAt() > new \DateTime() && $job->isActivated();
+        return $this->jobs->filter(function (Job $job) {
+            return $job->getExpiresAt() > new \DateTime() &&
+                $job->isActivated();
         });
     }
 
@@ -124,7 +125,7 @@ class Category
      *
      * @return self
      */
-    public function addJob(Job $job) : self
+    public function addJob(Job $job): self
     {
         if (!$this->jobs->contains($job)) {
             $this->jobs->add($job);
@@ -138,7 +139,7 @@ class Category
      *
      * @return self
      */
-    public function removeJob(Job $job) : self
+    public function removeJob(Job $job): self
     {
         $this->jobs->removeElement($job);
 
@@ -158,7 +159,7 @@ class Category
      *
      * @return self
      */
-    public function addAffiliate($affiliate) : self
+    public function addAffiliate($affiliate): self
     {
         if (!$this->affiliates->contains($affiliate)) {
             $this->affiliates->add($affiliate);
@@ -172,7 +173,7 @@ class Category
      *
      * @return self
      */
-    public function removeAffiliate($affiliate) : self
+    public function removeAffiliate($affiliate): self
     {
         $this->affiliates->removeElement($affiliate);
 

@@ -18,11 +18,8 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, [
-            'constraints' => [
-                new NotBlank(),
-                new Length(['max' => 100]),
-            ]
+        $builder->add("name", TextType::class, [
+            "constraints" => [new NotBlank(), new Length(["max" => 100])],
         ]);
     }
 
@@ -32,7 +29,7 @@ class CategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
+            "data_class" => Category::class,
         ]);
     }
 }
