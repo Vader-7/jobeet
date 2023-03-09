@@ -4,15 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Job;
+use App\Service\JobHistoryService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use App\Service\JobHistoryService;
 
 class CategoryController extends Controller
 {
-    
     /**
      * Finds and displays a category entity.
      *
