@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\MailerService;
 
 class AffiliateController extends AbstractController
 {
@@ -27,20 +28,23 @@ class AffiliateController extends AbstractController
      *
      * @return Response
      */
-    public function list(EntityManagerInterface $em, PaginatorInterface $paginator, int $page) : Response
-    {
+    public function list(
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        int $page
+    ): Response {
         $affiliates = $paginator->paginate(
-            $em->getRepository(Affiliate::class)->createQueryBuilder('a'),
+            $em->getRepository(Affiliate::class)->createQueryBuilder("a"),
             $page,
-            $this->getParameter('max_per_page'),
+            $this->getParameter("max_per_page"),
             [
-                PaginatorInterface::DEFAULT_SORT_FIELD_NAME => 'a.active',
-                PaginatorInterface::DEFAULT_SORT_DIRECTION => 'ASC',
+                PaginatorInterface::DEFAULT_SORT_FIELD_NAME => "a.active",
+                PaginatorInterface::DEFAULT_SORT_DIRECTION => "ASC",
             ]
         );
 
-        return $this->render('admin/affiliate/list.html.twig', [
-            'affiliates' => $affiliates,
+        return $this->render("admin/affiliate/list.html.twig", [
+            "affiliates" => $affiliates,
         ]);
     }
     /**
@@ -54,15 +58,21 @@ class AffiliateController extends AbstractController
      *
      * @param EntityManagerInterface $em
      * @param Affiliate $affiliate
+     * @param MailerService $mailer
      *
      * @return Response
      */
-    public function activate(EntityManagerInterface $em, Affiliate $affiliate) : Response
-    {
+    public function activate(
+        EntityManagerInterface $em,
+        Affiliate $affiliate,
+        MailerService $mailerService
+    ): Response {
         $affiliate->setActive(true);
         $em->flush();
 
-        return $this->redirectToRoute('admin.affiliate.list');
+        $mailerService->sendActivationEmail($affiliate);
+
+        return $this->redirectToRoute("admin.affiliate.list");
     }
 
     /**
@@ -79,11 +89,13 @@ class AffiliateController extends AbstractController
      *
      * @return Response
      */
-    public function deactivate(EntityManagerInterface $em, Affiliate $affiliate) : Response
-    {
+    public function deactivate(
+        EntityManagerInterface $em,
+        Affiliate $affiliate
+    ): Response {
         $affiliate->setActive(false);
         $em->flush();
 
-        return $this->redirectToRoute('admin.affiliate.list');
+        return $this->redirectToRoute("admin.affiliate.list");
     }
 }

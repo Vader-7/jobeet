@@ -23,8 +23,10 @@ class AffiliateController extends AbstractController
      *
      * @return RedirectResponse|Response
      */
-    public function create(Request $request, EntityManagerInterface $em) : Response
-    {
+    public function create(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
         $affiliate = new Affiliate();
         $form = $this->createForm(AffiliateType::class, $affiliate);
         $form->handleRequest($request);
@@ -35,11 +37,11 @@ class AffiliateController extends AbstractController
             $em->persist($affiliate);
             $em->flush();
 
-            return $this->redirectToRoute('affiliate.wait');
+            return $this->redirectToRoute("affiliate.wait");
         }
 
-        return $this->render('affiliate/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->render("affiliate/create.html.twig", [
+            "form" => $form->createView(),
         ]);
     }
     /**
@@ -51,6 +53,6 @@ class AffiliateController extends AbstractController
      */
     public function wait()
     {
-        return $this->render('affiliate/wait.html.twig');
+        return $this->render("affiliate/wait.html.twig");
     }
 }

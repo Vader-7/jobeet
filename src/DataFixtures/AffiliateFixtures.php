@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\DataFixtures;
 
@@ -14,22 +14,28 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
      *
      * @return void
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         $affiliateSensioLabs = new Affiliate();
-        $affiliateSensioLabs->setUrl('http://www.sensiolabs.com/');
-        $affiliateSensioLabs->setEmail('contact@sensiolabs.com');
+        $affiliateSensioLabs->setUrl("http://www.sensiolabs.com/");
+        $affiliateSensioLabs->setEmail("contact@sensiolabs.com");
         $affiliateSensioLabs->setActive(true);
-        $affiliateSensioLabs->setToken('sensio_labs');
-        $affiliateSensioLabs->addCategory($manager->merge($this->getReference('category-programming')));
+        $affiliateSensioLabs->setToken("sensio_labs");
+        $affiliateSensioLabs->addCategory(
+            $manager->merge($this->getReference("category-programming"))
+        );
 
         $affiliateKNPLabs = new Affiliate();
-        $affiliateKNPLabs->setUrl('http://www.knplabs.com/');
-        $affiliateKNPLabs->setEmail('hello@knplabs.com');
+        $affiliateKNPLabs->setUrl("http://www.knplabs.com/");
+        $affiliateKNPLabs->setEmail("hello@knplabs.com");
         $affiliateKNPLabs->setActive(true);
-        $affiliateKNPLabs->setToken('knp_labs');
-        $affiliateKNPLabs->addCategory($manager->merge($this->getReference('category-programming')));
-        $affiliateKNPLabs->addCategory($manager->merge($this->getReference('category-design')));
+        $affiliateKNPLabs->setToken("knp_labs");
+        $affiliateKNPLabs->addCategory(
+            $manager->merge($this->getReference("category-programming"))
+        );
+        $affiliateKNPLabs->addCategory(
+            $manager->merge($this->getReference("category-design"))
+        );
 
         $manager->persist($affiliateSensioLabs);
         $manager->persist($affiliateKNPLabs);
@@ -42,8 +48,6 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies(): array
     {
-        return [
-            CategoryFixtures::class,
-        ];
+        return [CategoryFixtures::class];
     }
 }

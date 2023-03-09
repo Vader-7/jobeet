@@ -12,13 +12,13 @@ class AffiliateRepository extends EntityRepository
      *
      * @return Affiliate|null
      */
-    public function findOneActiveByToken(string $token) : ?Affiliate
+    public function findOneActiveByToken(string $token): ?Affiliate
     {
-        return $this->createQueryBuilder('a')
-            ->where('a.active = :active')
-            ->andWhere('a.token = :token')
-            ->setParameter('active', true)
-            ->setParameter('token', $token)
+        return $this->createQueryBuilder("a")
+            ->where("a.active = :active")
+            ->andWhere("a.token = :token")
+            ->setParameter("active", true)
+            ->setParameter("token", $token)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -29,16 +29,16 @@ class AffiliateRepository extends EntityRepository
      */
     public function findActiveJobsForAffiliate(Affiliate $affiliate)
     {
-        return $this->createQueryBuilder('j')
-            ->leftJoin('j.category', 'c')
-            ->leftJoin('c.affiliates', 'a')
-            ->where('a.id = :affiliate')
-            ->andWhere('j.expiresAt > :date')
-            ->andWhere('j.activated = :activated')
-            ->setParameter('affiliate', $affiliate)
-            ->setParameter('date', new \DateTime())
-            ->setParameter('activated', true)
-            ->orderBy('j.expiresAt', 'DESC')
+        return $this->createQueryBuilder("j")
+            ->leftJoin("j.category", "c")
+            ->leftJoin("c.affiliates", "a")
+            ->where("a.id = :affiliate")
+            ->andWhere("j.expiresAt > :date")
+            ->andWhere("j.activated = :activated")
+            ->setParameter("affiliate", $affiliate)
+            ->setParameter("date", new \DateTime())
+            ->setParameter("activated", true)
+            ->orderBy("j.expiresAt", "DESC")
             ->getQuery()
             ->getResult();
     }

@@ -2,7 +2,6 @@
 
 namespace App\Controller\API;
 
-
 use App\Entity\Affiliate;
 use App\Entity\Job;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,11 +22,14 @@ class JobController extends FOSRestController
      *
      * @return Response
      */
-    public function getJobsAction(Affiliate $affiliate, EntityManagerInterface $em) : Response
-    {
-        $jobs = $em->getRepository(Job::class)->findActiveJobsForAffiliate($affiliate);
+    public function getJobsAction(
+        Affiliate $affiliate,
+        EntityManagerInterface $em
+    ): Response {
+        $jobs = $em
+            ->getRepository(Job::class)
+            ->findActiveJobsForAffiliate($affiliate);
 
         return $this->handleView($this->view($jobs, Response::HTTP_OK));
     }
-    
 }

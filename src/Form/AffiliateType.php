@@ -22,26 +22,19 @@ class AffiliateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('url', UrlType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Length(['max' => 255]),
-                ]
+            ->add("url", UrlType::class, [
+                "required" => false,
+                "constraints" => [new Length(["max" => 255])],
             ])
-            ->add('email', EmailType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                    new Email()
-                ]
+            ->add("email", EmailType::class, [
+                "constraints" => [new NotBlank(), new Email()],
             ])
-            ->add('categories', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ]
+            ->add("categories", EntityType::class, [
+                "class" => Category::class,
+                "choice_label" => "name",
+                "multiple" => true,
+                "expanded" => true,
+                "constraints" => [new NotBlank()],
             ]);
     }
 
@@ -51,7 +44,7 @@ class AffiliateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Affiliate::class,
+            "data_class" => Affiliate::class,
         ]);
     }
 }
