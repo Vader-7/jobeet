@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\JobHistoryService;
 
 class JobController extends AbstractController
 {
@@ -42,11 +43,14 @@ class JobController extends AbstractController
      * @Entity("job", expr="repository.findActiveJob(id)")
      *
      * @param Job $job
+     * @param JobHistoryService $jobHistoryService
      *
      * @return Response
      */
-    public function show(Job $job) : Response
+    public function show(Job $job, JobHistoryService $jobHistoryService) : Response
     {
+        $jobHistoryService->addJob($job);
+
         return $this->render('job/show.html.twig', [
             'job' => $job,
         ]);
