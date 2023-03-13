@@ -15,9 +15,9 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Job
 {
-    public const FULL_TIME_TYPE = "full-time";
-    public const PART_TIME_TYPE = "part-time";
-    public const FREELANCE_TYPE = "freelance";
+    public const FULL_TIME_TYPE = "Full-Time";
+    public const PART_TIME_TYPE = "Part-Time";
+    public const FREELANCE_TYPE = "Freelance";
 
     public const TYPES = [
         self::FULL_TIME_TYPE,
